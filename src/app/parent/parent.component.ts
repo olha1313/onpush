@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AppService } from '../services/app.service';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-parent',
@@ -8,12 +9,16 @@ import { AppService } from '../services/app.service';
 })
 export class ParentComponent implements OnInit {
   // public count = 0;
+  public objects$!: Observable<string>;
 
   constructor(private readonly cdr: ChangeDetectorRef, private readonly appService: AppService) {}
 
   ngOnInit(): void {
     this.cdr.detach();
     this.appService.interval$.subscribe(() => console.count('Observable'));
+
+    this.objects$ = this.appService.objects$;
+
 
     // setTimeout(() => {
     //   console.log('setTimeout after 1000 ParentComponent');
@@ -40,5 +45,9 @@ export class ParentComponent implements OnInit {
 
   public onDetachClick(): void {
     this.cdr.detach();
+  }
+
+  public onObjectClick(): void {
+    this.appService.objects$.next('New');
   }
 }

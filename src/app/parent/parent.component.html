@@ -8,3 +8,6 @@
 <button type="button" (click)="onReattachClick()">Reattach</button>
 <button type="button" (click)="onDetachClick()">Detach</button>
 
+{{ objects$ | async }}
+<button type="button" (click)="onObjectClick()">Change observable</button>
+
